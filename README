@@ -1,0 +1,2 @@
+RubyTubesday is a full-featured HTTP client. It supports automatic parsing of
+content bodies, caching, redirection, verified SSL, and basic authentication.
