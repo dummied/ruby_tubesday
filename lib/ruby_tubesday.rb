@@ -1,6 +1,7 @@
 require 'uri'
 require 'cgi'
 require 'net/https'
+require 'rubygems'
 require 'activesupport'
 
 class RubyTubesday
@@ -76,10 +77,19 @@ protected
 	end
 	
 	def process_request(request, url, options)
+		response = nil
+		cache_policy_options = CachePolicy.options_for_cache(options[:cache]) || {}
+		
 		if request.is_a?(Net::HTTP::Get) && options[:cache] && options[:cache].read(url.to_s)
-			response = options[:cache].read(url.to_s)
-		else
-			response = nil
+			response = Marshal.load(options[:cache].read(url.to_s))
+			response_age = Time.now - Time.parse(response['Last-Modified'] || response['Date'])
+			cache_policy = CachePolicy.new(response['Cache-Control'], cache_policy_options)
+			if cache_policy.fetch_action(response_age)
+				response = nil
+			end
+		end
+		
+		if response.nil?
 			redirects_left = options[:max_redirects]
 			
 			while !response.is_a?(Net::HTTPSuccess)
@@ -101,7 +111,10 @@ protected
 			end
 			
 			if request.is_a?(Net::HTTP::Get) && options[:cache]
-				options[:cache].write(url.to_s, response)
+				cache_policy = CachePolicy.new(response['Cache-Control'], cache_policy_options)
+				if cache_policy.may_cache?
+					options[:cache].write(url.to_s, Marshal.dump(response))
+				end
 			end
 		end
     
@@ -114,3 +127,4 @@ protected
 end
 
 require 'ruby_tubesday/parser'
+require 'ruby_tubesday/cache_policy'

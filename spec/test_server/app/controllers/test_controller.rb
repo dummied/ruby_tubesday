@@ -15,10 +15,4 @@ class TestController < Application
     headers['Content-Type'] = 'application/json'
     '{"hello":"world"}'
   end
-  
-  def counter
-    @@counter ||= 0
-    @@counter += 1
-    @@counter.to_s
-  end
 end

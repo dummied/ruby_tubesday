@@ -8,7 +8,7 @@ require 'ruby_tubesday'
 pwd = Dir.pwd
 Dir.chdir(File.dirname(__FILE__) + '/test_server')
 unless system('merb -d -e production')
-  STDERR.puts 'The test server failed to start. Make sure you have Merb installed.'
+  STDERR.puts 'The test server failed to start.'
   exit!(1)
 end
 Dir.chdir(pwd)
