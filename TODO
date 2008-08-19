@@ -1,0 +1,5 @@
+- multipart form encoding
+- more built-in automatic parsers
+- more authentication schemes (digest? gdata? ntlm?)
+- support for revalidation instead of always refetching
+- option to only send auth over secure connections
