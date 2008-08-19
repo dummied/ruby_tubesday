@@ -14,7 +14,9 @@ class RubyTubesday
 			:params        => {},
 			:max_redirects => 5,
 			:ca_file       => nil,
-			:verify_ssl    => true
+			:verify_ssl    => true,
+			:username      => nil,
+			:password      => nil
 		}
 		@default_options = normalize_options(options)
 	end
@@ -25,9 +27,8 @@ class RubyTubesday
 		
 		url_params = CGI.parse(url.query || '')
 		params = url_params.merge(options[:params])
-		if params.empty?
-			query_string = ''
-		else
+		query_string = ''
+		unless params.empty?
 			params.each do |key, values|
 				values = [values] unless values.is_a?(Array)
 				values.each do |value|
@@ -62,7 +63,9 @@ protected
 			:params        => options.delete(:params)        || @default_options[:params],
 	    :max_redirects => options.delete(:max_redirects) || @default_options[:max_redirects],
 	    :ca_file       => options.delete(:ca_file)       || @default_options[:ca_file],
-	    :verify_ssl    => options.delete(:verify_ssl)
+	    :verify_ssl    => options.delete(:verify_ssl),
+	    :username      => options.delete(:username)      || @default_options[:username],
+	    :password      => options.delete(:password)      || @default_options[:password]
 	  }
 	  
     normalized_options[:raw]        = @default_options[:raw]        if normalized_options[:raw].nil?
@@ -93,6 +96,9 @@ protected
 			redirects_left = options[:max_redirects]
 			
 			while !response.is_a?(Net::HTTPSuccess)
+				if options[:username] && options[:password]
+					request.basic_auth options[:username], options[:password]
+				end
 				client = Net::HTTP.new(url.host, url.port)
 				if (client.use_ssl = url.is_a?(URI::HTTPS))
 					client.verify_mode = options[:verify_ssl] ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE

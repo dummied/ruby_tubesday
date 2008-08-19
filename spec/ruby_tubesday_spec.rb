@@ -10,7 +10,10 @@ describe RubyTubesday do
   end
   
   it "should post forms" do
-    raise 'test not written'
+    @client.post(
+      'http://localhost:4000/test_controller/post',
+      :params => { :narf => 'blat' }
+    ).should == 'blat'
   end
   
   it "should follow redirects" do
@@ -21,6 +24,25 @@ describe RubyTubesday do
     lambda {
       @client.get('http://localhost:4000/test_controller/redirect_forever')
     }.should raise_error(RubyTubesday::TooManyRedirects)
+  end
+  
+  it "should permit a default set of CGI parameters to be set" do
+    client = RubyTubesday.new :params => { :api_key => '12345' }
+    client.get('http://localhost:4000/test_controller/api_key').should == '12345'
+  end
+  
+  it "should support basic HTTP authentication" do
+    lambda {
+      @client.get('http://localhost:4000/test_controller/basic_auth', :cache => false)
+    }.should raise_error
+    lambda {
+      @client.get(
+        'http://localhost:4000/test_controller/basic_auth',
+        :cache    => false,
+        :username => 'narf',
+        :password => 'blat'
+      )
+    }.should_not raise_error
   end
   
   describe "(content parsing)" do
@@ -107,9 +129,5 @@ describe RubyTubesday do
         @shared_client.get('http://localhost:4000/cache_control/s_maxage').should_not == i
       end
     end
-  end
-  
-  it "should support basic HTTP authentication" do
-    raise 'test not written'
   end
 end

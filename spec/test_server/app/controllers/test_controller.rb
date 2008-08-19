@@ -15,4 +15,20 @@ class TestController < Application
     headers['Content-Type'] = 'application/json'
     '{"hello":"world"}'
   end
+  
+  def api_key
+    params[:api_key]
+  end
+  
+  def post
+    raise('unsupported method') unless request.method == :post
+    params[:narf]
+  end
+  
+  def basic_auth
+    basic_authentication('Ruby Tubesday Specs') do |username, password|
+      username == 'narf' && password == 'blat'
+    end
+    'something secret'
+  end
 end
