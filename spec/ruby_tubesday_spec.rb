@@ -2,7 +2,7 @@ require (File.dirname(__FILE__) + '/spec_helper')
 
 describe RubyTubesday do
   before(:each) do
-    @client = RubyTubesday.new :ca_file => '/usr/share/curl/curl-ca-bundle.crt'
+    @client = RubyTubesday.new
   end
 
   it "should fetch web pages" do

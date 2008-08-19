@@ -5,6 +5,6 @@ Gem::Specification.new do |spec|
 	spec.author = 'DanaDanger'
 	spec.homepage = 'http://github.com/DanaDanger/ruby_tubesday'
 	spec.has_rdoc = true
-	spec.files = Dir.glob('lib/**/*.rb')
+	spec.files = Dir.glob('lib/**/*.rb', 'ca-bundle.crt')
 	spec.add_dependency('activesupport', '>=2.1')
 end

@@ -13,7 +13,7 @@ class RubyTubesday
 			:cache         => ActiveSupport::Cache::MemoryStore.new,
 			:params        => {},
 			:max_redirects => 5,
-			:ca_file       => nil,
+			:ca_file       => (File.dirname(__FILE__) + '/../ca-bundle.crt'),
 			:verify_ssl    => true,
 			:username      => nil,
 			:password      => nil
