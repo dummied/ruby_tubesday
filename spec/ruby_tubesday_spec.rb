@@ -128,6 +128,12 @@ describe RubyTubesday do
         sleep 6
         @shared_client.get('http://localhost:4000/cache_control/s_maxage').should_not == i
       end
+      
+      it "should allow the server's cache policy to be overriden" do
+        i = @client.get('http://localhost:4000/cache_control/max_age')
+        sleep 6
+        @client.get('http://localhost:4000/cache_control/max_age', :force_cache => 1.hour).should_not == i
+      end
     end
   end
 end
