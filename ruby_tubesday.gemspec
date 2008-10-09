@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
 	spec.name = 'ruby_tubesday'
-	spec.version = '0.1'
+	spec.version = '0.2'
 	spec.summary = 'Full-featured HTTP client library.'
 	spec.author = 'DanaDanger'
 	spec.homepage = 'http://github.com/DanaDanger/ruby_tubesday'

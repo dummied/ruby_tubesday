@@ -55,6 +55,7 @@ class RubyTubesday
 	#                   request.
 	# password::        Username to send using basic authentication with every
 	#                   request.
+	# headers::         Hash of HTTP headers to set for every request.
 	#
 	# All of these options can be overriden on a per-request basis.
 	def initialize(options = {})
@@ -67,7 +68,8 @@ class RubyTubesday
 			:ca_file       => (File.dirname(__FILE__) + '/../ca-bundle.crt'),
 			:verify_ssl    => true,
 			:username      => nil,
-			:password      => nil
+			:password      => nil,
+			:headers       => nil
 		}
 		@default_options = normalize_options(options)
 	end
@@ -138,7 +140,8 @@ protected
 	    :ca_file       => options.delete(:ca_file)       || @default_options[:ca_file],
 	    :verify_ssl    => options.delete(:verify_ssl),
 	    :username      => options.delete(:username)      || @default_options[:username],
-	    :password      => options.delete(:password)      || @default_options[:password]
+	    :password      => options.delete(:password)      || @default_options[:password],
+	    :headers       => options.delete(:headers)       || @default_options[:headers]
 	  }
 	  
     normalized_options[:raw]         = @default_options[:raw]         if normalized_options[:raw].nil?
@@ -170,6 +173,12 @@ protected
 		# Cache miss. Fetch the entity from the network.
 		if response.nil?
 			redirects_left = options[:max_redirects]
+			
+			# Configure headers.
+			headers = options[:headers] || {}
+			headers.each do |key, value|
+			  request[key] = value
+		  end
 			
 			while !response.is_a?(Net::HTTPSuccess)
 				client = Net::HTTP.new(url.host, url.port)
