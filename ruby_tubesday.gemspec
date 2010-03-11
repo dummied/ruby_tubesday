@@ -1,8 +1,8 @@
 Gem::Specification.new do |spec|
 	spec.name = 'ruby_tubesday'
-	spec.version = '0.3'
+	spec.version = '0.3.1'
 	spec.summary = 'Full-featured HTTP client library.'
-	spec.author = 'Chris Vannoy'
+	spec.author = 'Dana Contreras'
 	spec.homepage = 'http://github.com/dummied/ruby_tubesday'
 	spec.has_rdoc = true
 	spec.files = [
