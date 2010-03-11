@@ -1,9 +1,9 @@
 Gem::Specification.new do |spec|
 	spec.name = 'ruby_tubesday'
-	spec.version = '0.2'
+	spec.version = '0.3'
 	spec.summary = 'Full-featured HTTP client library.'
-	spec.author = 'DanaDanger'
-	spec.homepage = 'http://github.com/DanaDanger/ruby_tubesday'
+	spec.author = 'Chris Vannoy'
+	spec.homepage = 'http://github.com/dummied/ruby_tubesday'
 	spec.has_rdoc = true
 	spec.files = [
 		'lib/ruby_tubesday.rb',
