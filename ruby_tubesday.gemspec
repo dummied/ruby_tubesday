@@ -11,5 +11,5 @@ Gem::Specification.new do |spec|
 		'lib/ruby_tubesday/parser.rb',
 		'ca-bundle.crt'
 	]
-	spec.add_dependency('activesupport', '>=2.1')
+	spec.add_dependency('active_support', '>=2.1')
 end

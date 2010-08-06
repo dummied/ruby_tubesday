@@ -22,13 +22,13 @@ class RubyTubesday
           key, value = directive.split('=', 2)
           
           case key
-          when 'public'          : @privacy = PUBLIC
-          when 'private'         : @privacy = PRIVATE
-          when 'no-cache'        : @storability = NO_CACHE
-          when 'no-store'        : @storability = NO_STORE
-          when 'max-age'         : @max_age = value.to_i
-          when 's-maxage'        : @s_max_age = value.to_i
-          when 'must-revalidate' : @must_revalidate = true
+          when 'public'          then @privacy = PUBLIC
+          when 'private'         then @privacy = PRIVATE
+          when 'no-cache'        then @storability = NO_CACHE
+          when 'no-store'        then @storability = NO_STORE
+          when 'max-age'         then @max_age = value.to_i
+          when 's-maxage'        then @s_max_age = value.to_i
+          when 'must-revalidate' then @must_revalidate = true
           end
         end
       end
@@ -66,9 +66,9 @@ class RubyTubesday
     
     def self.options_for_cache(cache)
       case cache
-      when ActiveSupport::Cache::MemoryStore   : { :shared => false, :stored => false }
-      when ActiveSupport::Cache::FileStore     : { :shared => true,  :stored => true  }
-      when ActiveSupport::Cache::MemCacheStore : { :shared => true,  :stored => false }
+      when ActiveSupport::Cache::MemoryStore   then { :shared => false, :stored => false }
+      when ActiveSupport::Cache::FileStore     then { :shared => true,  :stored => true  }
+      when ActiveSupport::Cache::MemCacheStore then { :shared => true,  :stored => false }
       end
     end
   
