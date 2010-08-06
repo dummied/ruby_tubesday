@@ -2,7 +2,7 @@ require 'uri'
 require 'cgi'
 require 'net/https'
 require 'rubygems'
-require 'active_support'
+require 'activesupport'
 
 require 'ruby_tubesday/parser'
 require 'ruby_tubesday/cache_policy'
